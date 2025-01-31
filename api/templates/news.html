@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style_cb.css') }}">
+
+	<title>AdminHub</title>
+</head>
+<body>
+	<canvas class="background"></canvas>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class="bx bx-menu"></i>
+			<button class="nav-button" onclick="dashboardpage()">
+				<span class="nav-icon"><i class="material-icons">dashboard</i></span> Dashboard
+			</button>
+			<button class="nav-button" onclick="eventspage()">
+				<span class="nav-icon"><i class="material-icons">event</i></span> Events
+			</button>
+			<button class="nav-button" onclick="newspage()">
+				<span class="nav-icon"><i class="material-icons">article</i></span> News
+			</button>
+			<button class="nav-button" onclick="pdfpage()">
+				<span class="material-icons nav-icon">description</span> Summary
+			</button>
+			
+			</button>
+			<a href="{{ url_for('notifications') }}" class="notification">
+				<i class="bx bxs-bell"></i>
+				<span class="num">8</span>
+			</a>
+			<a href="{{ url_for('profile') }}" class="profile">
+				<i class="icon material-icons">settings</i>
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<main>
+			<!-- Chatbox -->
+			<div id="news-container">
+				<!-- Messages will be dynamically inserted here -->
+			</div>
+
+			<!-- User Input conatiner -->
+			<div id="assistant-container">
+				<div class="assistant-bar">
+					<textarea id="query-input" placeholder="type your answer here" rows="3" required></textarea>
+					<button id="submit-button" class="search-btn"><i class="bx bx-send"></i></button>
+					<button id="mic-button" class="search-btn"><i class="bx bx-microphone"></i></button>
+					<button type="submit" class="search-btn"><i class="bx bx-upload"></i></button>
+				</div>
+			</div>
+		</main>
+	</section>
+	<!-- CONTENT -->
+	<script>
+	function newspage(){
+		window.location.href='{{ url_for("news") }}'
+	}
+	function dashboardpage(){
+		window.location.href='{{ url_for("dashboard") }}'
+	}
+	function pdfpage(){
+		window.location.href='{{ url_for("summary") }}'
+	}
+	function eventspage(){
+		window.location.href='{{ url_for("events") }}'
+	}
+	document.addEventListener("DOMContentLoaded", function() {
+		const queryInput = document.getElementById("query-input");
+		const submitButton = document.getElementById("submit-button");
+
+		// Function to send the input to the server
+		async function fetchnews() {
+			const query = queryInput.value.trim();
+
+            if (query) {
+                await fetch("/fetchnews", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ query: query }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const newslist = data.newslist;
+                    const newsContainer = document.getElementById("news-container");
+
+                    // Append each news item to the news container
+                    for (let i = 0; i < newslist.length; i++) {
+                        const newsItem = document.createElement("div");
+                        newsItem.className = "news-item";
+
+                        // Create title element
+                        const title = document.createElement("a");
+                        title.className = "news-title";
+                        title.href = newslist[i].link; // Make it clickable
+                        title.textContent = newslist[i].title;
+                        title.target = "_blank"; // Open in a new tab
+
+                        // Create image element
+                        const image = document.createElement("img");
+                        image.className = "news-image";
+                        image.src = newslist[i].image_url;
+                        image.alt = "News Image";
+                        image.style.width = "100%"; // Adjust size as needed
+
+                        // Append title and image to the news item
+                        newsItem.appendChild(title);
+                        newsItem.appendChild(image);
+
+                        // Append news item to the news container
+                        newsContainer.appendChild(newsItem);
+                    }
+
+                    // Clear the input field
+                    queryInput.value = "";
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }
+        }
+
+		// Trigger the function when "Enter" is pressed (with no modifier key)
+		queryInput.addEventListener("keydown", function(event) {
+			if (event.key === "Enter" && !event.shiftKey) {
+				event.preventDefault();
+				fetchnews();
+			}
+		});
+
+		// Trigger the function when the submit button is clicked
+		submitButton.addEventListener("click", function() {
+			sendQuery();
+		});
+	});
+
+	 </script>
+	<script src="{{ url_for('static', filename='script_cb.js') }}"></script>
+</body>
+</html>

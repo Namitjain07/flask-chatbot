@@ -1,0 +1,327 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  background: linear-gradient(90deg, #00004C 13%, #0F0F8C 87%);
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+}
+
+header .logo img {
+  height: 50px;
+  margin-right: 10px;
+}
+
+header .logo h1 {
+  margin: 0;
+}
+
+header .navbar ul {
+  list-style: none;
+  display: flex;
+}
+
+header .navbar ul li {
+  margin-left: 20px;
+}
+
+header .navbar ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
+}
+
+header .navbar ul li a:hover {
+  background-color: #ffffff;
+  color: #003366;
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header .navbar ul li a:active {
+  background-color: #0066cc;
+  color: white;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
+}
+
+/* Background Text */
+.background-text {
+  text-align: center;
+  padding: 30px;
+  background-color: #f0f4fc;
+}
+
+.background-text h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #002855;
+  letter-spacing: 1.5px;
+}
+
+/* Slider */
+.slider {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 0;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slide-content {
+  width: 80%;
+  max-width: 800px;
+  color: #333;
+}
+
+.event-info h2 {
+  color: #0066cc;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.event-info h3,
+.event-info p {
+  margin-bottom: 10px;
+}
+
+/* Slider Buttons */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 10;
+  transition: background-color 0.3s;
+}
+
+.slider-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev-btn {
+  left: 20px;
+}
+
+.next-btn {
+  right: 20px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  width: 400px;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header img {
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.forgot-password {
+  display: block;
+  margin-bottom: 15px;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #e60023;
+}
+
+.btn.social-btn {
+  background: #4267B2;
+}
+
+.btn.social-btn.google {
+  background: #4267B2;
+}
+
+.or-divider {
+  margin: 20px 0;
+  font-weight: bold;
+  color: #666;
+}
+
+.sign-up,
+.already-member {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.sign-up a,
+.already-member a {
+  color: #e60023;
+  font-weight: bold;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  background-color: transparent; /* No background for the button */
+  border: none; /* Remove any borders */
+  z-index: 100; /* Ensure it appears on top of the modal content */
+}
+
+.terms {
+  margin: 10px 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.terms a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+/* Scrollbar Styling */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #bbb;
+}
+
+/* Footer */
+.footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    margin: 10% 5%;
+    max-width: 90%;
+  }
+}

@@ -1,0 +1,481 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Arial, serif";
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling but allow vertical scrolling */
+}
+
+.cal {
+    width: 100%;
+    min-height: 100vh; /* Ensure the calendar container grows vertically with content */
+    display: flex; /* Flexbox to center the calendar */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#calendar {
+    width: 80%;
+    margin: 50px auto; /* Adds spacing above and below */
+    position: relative; /* No absolute positioning to respect natural document flow */
+}
+
+.cal .calendar-body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Ensure overflow is hidden if calendar exceeds container */
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+/* Styling for the Add Event button */
+.add-event-btn {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 60px;
+	height: 60px;
+	background: linear-gradient(90deg, #00004C 13%, #0F0F8C 87%);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	font-size: 24px;
+	color: white;
+	border: none;
+}
+
+/* Popup Modal */
+.popup {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 300px;
+	background: #fff;
+	padding: 20px;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	z-index: 1000;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #00004C;
+}
+
+.popup-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 999;
+}
+
+.popup h2 {
+	margin-top: 0;
+	font-size: 20px;
+	text-align: center;
+}
+
+.popup input,
+.popup textarea {
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+.popup button {
+	background:  linear-gradient(90deg, #00004C 13%, #0F0F8C 87%);
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+}
+
+.popup button:hover {
+	background: linear-gradient(90deg, #5864D2 13%, #6763D0 87% )
+}
+
+.popup div {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds spacing between elements */
+    margin-bottom: 10px; /* Adds spacing below the container */
+}
+
+.popup div label {
+    margin-right: 10px; /* Adds spacing between the label and radio buttons */
+    font-size: 14px; /* Adjust font size for better readability */
+}
+
+.popup div input[type="radio"] {
+    margin-left: 5px; /* Adds spacing to the left of the radio buttons */
+}
+
+.popup input[type="time"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+:root {
+	--poppins: 'Ariel', sans-serif;
+	--lato: 'Ariel', sans-serif;
+
+	--light: #F9F9F9;
+	--blue: #3C91E6;
+	--light-blue: #CFE8FF;
+	--grey: #eee;
+	--dark-grey: #AAAAAA;
+	--dark: #342E37;
+	--red: #DB504A;
+	--yellow: #FFCE26;
+	--light-yellow: #FFF2C6;
+	--orange: #FD7238;
+	--light-orange: #FFE0D3;
+}
+
+html {
+	overflow-x: hidden;
+}
+
+body.dark {
+	--light: #0C0C1E;
+	--grey: #060714;
+	--dark: #FBFBFB;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+
+/* CONTENT */
+#content {
+	position: relative;
+	width: calc(100% - 280px);
+	left: 280px;
+	transition: .3s ease;
+}
+#sidebar.hide ~ #content {
+	width: calc(100% - 60px);
+	left: 60px;
+}
+
+
+/* NAVBAR */
+#content nav {
+	height: 60px;
+	background: var(--light);
+	padding: 0 24px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+	font-family: var(--lato);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	width: 100%;
+	overflow: hidden; /* Hides the scroll bar */
+    white-space: nowrap;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+#content nav::before {
+	content: '';
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	bottom: -40px;
+	left: 0;
+	border-radius: 50%;
+	box-shadow: -20px -20px 0 var(--light);
+}
+#content nav a {
+	color: var(--dark);
+}
+#content nav .bx.bx-menu {
+	cursor: pointer;
+	color: var(--dark);
+}
+#content nav .nav-link {
+	font-size: 16px;
+	transition: .3s ease;
+}
+#content nav .nav-link:hover {
+	color: var(--blue);
+}
+
+#content nav .notification {
+	font-size: 27px;
+	position: absolute; /* Position it relative to the navbar */
+	right: 55px; /* Adjust based on the desired distance from the right edge */
+}
+
+#content nav .notification .num {
+	position: absolute;
+	top: -5px; /* Adjust to position the notification number */
+	right: -5px; /* Adjust to position the notification number */
+	background-color: var(--red);
+	color: white;
+	border-radius: 50%;
+	width: 18px;
+	height: 18px;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#content nav .profile {
+	position: absolute; /* Position it relative to the navbar */
+	right: 10px; /* Add some margin from the right edge */
+}
+#content nav .profile img {
+	width: 36px;
+	height: 36px;
+	object-fit: cover;
+	border-radius: 50%;
+	margin-right: 2px;
+}
+
+.nav-button {
+    background: linear-gradient(to right, #00004c, #0f0f8c);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    height: 38px;
+    width: 180px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  .nav-button:hover {
+    background: linear-gradient(90deg, #9DA8EC 13%, #7F88DA 87%);
+    transform: scale(1.05); /* Slightly scales up on hover */
+  }
+  
+  .nav-icon {
+    font-size: 20px;
+  }
+  
+  /* Notification and Settings Icons */
+  .icons {
+    display: flex;
+    gap: 15px;
+    font-size: 35px;
+  }
+  
+  .icon {
+    font-size: 30px;
+    cursor: pointer;
+    color: #333333;
+    transition: color 0.3s ease;
+  }
+  
+  .icon:hover {
+    color: #4141a8; /* Highlighted color on hover */
+  }
+  
+/* NAVBAR */
+
+
+#sidebar.hide + #content {
+	margin-left: 0; /* Reset when sidebar is hidden */
+  }
+  
+  /* Assistant Input Form (Optional Styling) */
+  main .form-input input {
+	width: 100%; /* Ensure it adjusts dynamically */
+	box-sizing: border-box;
+  }
+
+#content main {
+    flex-grow: 1;
+    position:absolute;
+    padding: 20px;
+}
+
+/* Responsive form at the bottom */
+#content main form {
+    position: fixed;
+    bottom: 0;
+    left: 280px; /* Align with sidebar when visible */
+    width: calc(100% - 280px); /* Adjust width */
+    height: 100px;
+	padding: 10px;
+	border: 5px solid #00004c;
+	box-sizing: border-box;
+
+    transition: left 0.3s ease, width 0.3s ease, height 0.3s ease;
+	font-size: medium;
+}
+
+#content main .form-input input {
+    flex-grow: 1;
+    padding: 0 16px;
+    height: 60px;
+    border: none;
+    background: var(--grey);
+    border-radius: 36px 0 0 36px;
+    outline: none;
+    width: 92%; /* Keep it full width */
+    color: var(--dark);
+    font-size: medium;
+    transition: background-color 0.3s ease;
+
+    white-space: nowrap; /* Prevent the text from wrapping */
+    overflow-x: auto; /* Allow horizontal scrolling */
+	overflow-y: auto;
+}
+
+#content main .form-input button {
+	width: 40px;
+	height: 100%;
+	background: linear-gradient(to right, #00004c, #0f0f8c);
+	color: var(--light);
+	font-size: 30px;
+	border-radius: 50%;
+	margin-right: 2px;
+	transition: background-color 0.3s ease;
+	cursor: pointer;
+}
+
+#content main .form-input button:hover{
+    background-color: linear-gradient(to bottom, #b3c7ff, #566db1);
+}
+
+
+#sidebar.hide ~ #content main form {
+    left: 60px; /* Adjust left position */
+    width: calc(100% - 60px); /* Wider when sidebar is collapsed */
+}
+
+
+
+
+
+@media screen and (max-width: 768px) {
+	#sidebar {
+		width: 200px;
+	}
+
+	#content {
+		width: calc(100% - 60px);
+		left: 200px;
+	}
+
+	#content nav .nav-link {
+		display: none;
+	}
+}
+
+
+
+
+
+
+@media screen and (max-width: 576px) {
+	#content nav form .form-input input {
+		display: none;
+	}
+
+	#content nav form .form-input button {
+		width: auto;
+		height: auto;
+		background: transparent;
+		border-radius: none;
+		color: var(--dark);
+	}
+
+	#content nav form.show .form-input input {
+		display: block;
+		width: 100%;
+	}
+	#content nav form.show .form-input button {
+		width: 36px;
+		height: 100%;
+		border-radius: 0 36px 36px 0;
+		color: var(--light);
+		background: var(--red);
+	}
+
+	#content nav form.show ~ .notification,
+	#content nav form.show ~ .profile {
+		display: none;
+	}
+
+	#content main .box-info {
+		grid-template-columns: 1fr;
+	}
+
+	#content main .table-data .head {
+		min-width: 420px;
+	}
+	#content main .table-data .order table {
+		min-width: 420px;
+	}
+	#content main .table-data .todo .todo-list {
+		min-width: 420px;
+	}
+}
+
+.background{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+  }
+

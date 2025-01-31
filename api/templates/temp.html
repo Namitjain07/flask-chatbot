@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style_cb.css') }}">
+
+	<title>AdminHub</title>
+</head>
+<body>
+	<canvas class="background"></canvas>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="{{ url_for('home') }}" class="brand">
+			<span class="text">Sahayak</span>
+		</a>
+		<ul class="side-menu">
+			<li class="active">
+				<a href="{{ url_for('welcome') }}">
+					<i class="bx bxs-user"></i>
+					<span class="text">Welcome back! </span>
+				</a>
+			</li>
+		</ul>
+		<form action="{{ url_for('search') }}" method="get">
+			<div class="form-input">
+				<input type="search" name="q" placeholder="Search...">
+				<button type="submit" class="search-btn"><i class="bx bx-search"></i></button>
+			</div>
+		</form>
+		<ul class="side-menubot">
+			<li>
+				<a href="{{ url_for('settings') }}">
+					<i class="bx bxs-cog"></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{ url_for('logout') }}" class="logout">
+					<i class="bx bxs-log-out-circle"></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class="bx bx-menu"></i>
+			<button class="nav-button" onclick=`window.location.href='{{ url_for("dashboard") }}'>
+				<span class="nav-icon"><i class="material-icons">dashboard</i></span> Dashboard
+			</button>
+			<button class="nav-button" onclick=`window.location.href='{{ url_for("events") }}'>
+				<span class="nav-icon"><i class="material-icons">event</i></span> Events
+			</button>
+			<button class="nav-button" onclick=`window.location.href='{{ url_for("news") }}'>
+				<span class="nav-icon"><i class="material-icons">article</i></span> News
+			</button>
+			<button class="nav-button" onclick=`window.location.href='{{ url_for("summary") }}'>
+				<span class="material-icons nav-icon">description</span> Summary
+			</button>
+			
+			</button>
+			<a href="{{ url_for('notifications') }}" class="notification">
+				<i class="bx bxs-bell"></i>
+				<span class="num">8</span>
+			</a>
+			<a href="{{ url_for('profile') }}" class="profile">
+				<i class="icon material-icons">settings</i>
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<main>
+			<!-- Chatbox -->
+			<div id="chat-container">
+				<!-- Messages will be dynamically inserted here -->
+			</div>
+
+			<!-- User Input Form -->
+			<form id="assistant-form">
+				<div class="form-input">
+					<input type="text" name="query" id="query" placeholder="Your assistant is ready—what’s the plan?" required>
+					<button type="submit" class="search-btn"><i class="bx bx-microphone"></i></button>
+					<button type="submit" class="search-btn"><i class="bx bx-upload"></i></button>
+				</div>
+			</form>
+		</main>
+	</section>
+	<!-- CONTENT -->
+	<script>
+    document.getElementById('assistant-form').addEventListener('submit', function(e) {
+        e.preventDefault();  // Prevent form from submitting and reloading the page
+
+        const queryInput = document.getElementById('query'); // Get the input field
+        const query = queryInput.value.trim();  // Get and trim the user input
+        
+        if (query) {
+            // Create and append the user message bubble
+            const userBubble = document.createElement('div');
+            userBubble.classList.add('chat-bubble', 'user');
+            userBubble.textContent = query;
+            document.getElementById('chat-container').appendChild(userBubble);
+
+            // Clear the input field
+            queryInput.value = '';
+
+            // Send the query to the Flask server using AJAX (fetch)
+            fetch('/assistant', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ query: query })
+            })
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                // Create and append the assistant's response bubble
+                const assistantBubble = document.createElement('div');
+                assistantBubble.classList.add('chat-bubble', 'assistant');
+                assistantBubble.textContent = data.response; // Add the response text
+                document.getElementById('chat-container').appendChild(assistantBubble);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+	</script>
+	<script src="{{ url_for('static', filename='script_cb.js') }}"></script>
+
+</body>
+</html>

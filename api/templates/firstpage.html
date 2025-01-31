@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+  <title>SAHAYAK - THE ULTIMATE AI SUPPORT</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style_hp.css') }}">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='logo1.png') }}" alt="Sahayak Logo" class="navbar-logo">
+      <h1>SAHAYAK</h1>
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li><a href="{{ url_for('chatbot') }}" class="btn">Home</a></li>
+        <li><a href="#" class="btn">About</a></li>
+        <li><a href="#" class="btn">Log In</a></li>
+        <li><a href="#" class="btn">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Background Text -->
+  <div class="background-text">
+    <h2>Your Ultimate AI Support!</h2>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="modal-header">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        <h2>Welcome to SAHAYAK</h2>
+      </div>
+      <form action="/login" method="POST">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <a href="#" class="forgot-password">Forgot your password?</a>
+        <button type="submit" class="btn primary">Log In</button>
+        <div class="or-divider">OR</div>
+        <button type="button" class="btn social-btn google">Continue with Google</button>
+      </form>
+      <p class="sign-up">
+        Not on SAHAYAK yet? <a href="#" onclick="switchToSignUp()">Sign up</a>
+      </p>
+    </div>
+  </div>  
+
+  <!-- Sign Up Modal -->
+  <div id="signup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="modal-header">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        <h2>Create Your SAHAYAK Account</h2>
+      </div>
+      <form action="/register" method="POST">
+        <label for="username">Username</label>
+        <input type="text" id="signup-name" name="username" placeholder="Enter your username" required>
+        <label for="email">Email</label>
+        <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="1234567890" required>
+        <small>Enter a 10-digit phone number</small>
+        <label for="password">Password</label>
+        <input type="password" id="signup-password" name="password" placeholder="Create a password" required>
+        <label for="birthdate">Birthdate</label>
+        <input type="date" id="birthdate" name="dob" required>
+        <label for="gender">Gender</label>
+        <select id="gender" required name="gender">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="non-binary">Non-Binary</option>
+          <option value="prefer-not-to-say">Prefer Not to Say</option>
+        </select>
+        <label for="domain">Domain of Work</label>
+        <select id="domain" required>
+          <option value="">Select</option>
+          <option value="technology">Technology</option>
+          <option value="healthcare">Healthcare</option>
+          <option value="education">Education</option>
+          <option value="finance">Finance</option>
+          <option value="other">Other</option>
+        </select>
+        <p class="terms">
+          By signing up, you agree to our <a href="#">Terms of Service</a> and acknowledge our <a href="#">Privacy Policy</a>.
+        </p>
+        <button type="submit" class="btn primary">Sign Up</button>
+      </form>
+      <p class="already-member">
+        Already a member? <a href="#" onclick="switchToLogin()">Log In</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Slider Section -->
+  <section class="slider">
+    <div class="slider-container">
+      <!-- Slide 1 -->
+      <div class="slide active">
+        <div class="slide-content">
+          <div class="text-box">
+            <h1>Chatbot support</h1>
+            <p>Seamless solutions to all your problems</p>
+          </div>
+        </div>
+        <div class="slide-image">
+          <img src="{{ url_for('static', filename='chatbot.jpg') }}" alt="Chatbot">
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide">
+        <div class="slide-content">
+          <div class="slide-text">
+            <h2>Translator</h2>
+            <p>Get translations done quickly</p>
+          </div>
+        </div>
+        <div class="slide-image">
+          <img src="{{ url_for('static', filename='translator.png') }}" alt="Translator">
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide">
+        <div class="slide-content">
+          <div class="slide-text">
+            <h2>Latest news updates</h2>
+            <p>The best part is you get solutions too</p>
+          </div>
+        </div>
+        <div class="slide-image">
+          <img src="{{ url_for('static', filename='2.png') }}" alt="News">
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide">
+        <div class="slide-content">
+          <div class="slide-text">
+            <h2>Events scheduler</h2>
+            <p>Get your hassle sorted!</p>
+          </div>
+        </div>
+        <div class="slide-image">
+          <img src="{{ url_for('static', filename='1.png') }}" alt="Schedule">
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="slide">
+        <div class="slide-content">
+          <div class="slide-text">
+            <h2>PDF reader</h2>
+            <p>Read and support PDFs with AI</p>
+          </div>
+        </div>
+        <div class="slide-image">
+          <img src="{{ url_for('static', filename='pdf.jpg') }}" alt="PDF">
+        </div>
+      </div>
+
+      <!-- Slider Navigation Buttons -->
+      <button class="slider-btn prev-btn" id="prev-btn">&#10094;</button>
+      <button class="slider-btn next-btn" id="next-btn">&#10095;</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2025 SAHAYAK. All rights reserved.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script_hp.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and View PDF</title>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_pdf.css') }}">
+</head>
+
+<body>
+    <!-- Drag and Drop Container -->
+    <canvas class="background"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+
+    <section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			  <button class="nav-button" onclick="dashboardpage()">
+				<span class="nav-icon"><i class="material-icons">dashboard</i></span> Dashboard
+			  </button>
+			  
+			  <button class="nav-button" onclick="eventspage()">
+				<span class="nav-icon"><i class="material-icons">event</i></span> Events
+			  </button>
+			  
+			  <button class="nav-button" onclick="newspage()">
+				<span class="nav-icon"><i class="material-icons">article</i></span> News
+			  </button>
+	
+			  <button class="nav-button" onclick="pdfpage()">
+				<span class="material-icons nav-icon">description</span> Summary
+			  </button>
+
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num"></span>
+			</a>
+			<i class="icon material-icons">settings</i>
+		</nav>
+		<!-- NAVBAR -->
+
+    <div id="uploadContainer">
+        <h2>Drag & Drop to Upload File</h2>
+        <p>OR</p>
+        <input id="pdfFile" type="file" accept=".pdf" style="display: none;" />
+        <button id="browseButton">Browse File</button>
+    </div>
+
+    <!-- Loading Animation -->
+    <div id="loading" style="display: none;">
+        <div class="spinner"></div>
+        <span>Loading your PDF...</span>
+    </div>
+
+    <!-- PDF Viewer -->
+    <div id="pdfViewer"></div>
+
+    <button id="upload-again-button">Upload Again</button>
+
+
+
+    <div id="summary-view">
+        <div id="view-toggle-button" class="view-toggle-button">
+            <span class="arrow-icon">&#8594;</span>
+        </div>
+    </div>
+
+    <div class="floating_menu" id="FloatMenu">
+        <div class="menu">
+            <span class="material-icons">add</span>
+        </div>
+        <div class="sub_menu">
+            <div class="item">
+                <span class="material-icons" id="summarize-button" title="Summarize">description</span>
+                <span>Summarize</span>
+            </div>
+            <div class="item">
+                <span class="material-icons" id="translate-button" title="Translate">translate</span>
+                <span>Translate</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script_pdf.js') }}"></script>
+    <script>
+      function newspage(){
+          window.location.href='{{url_for("news")}}'
+      }
+      function dashboardpage(){
+          window.location.href='{{url_for("dashboard")}}'
+      }
+      function pdfpage(){
+          window.location.href='{{url_for("summary")}}'
+      }
+      function eventspage(){
+          window.location.href='{{url_for("events")}}'
+      }
+    </script>
+</body>
+
+</html>
